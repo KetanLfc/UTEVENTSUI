@@ -492,5 +492,14 @@
   </div>
 </div>
 
-
+<!-- Message Modal -->
+<div class="custom-modal" *ngIf="showMessageModal">
+  <div class="modal-content bg-secondary text-white p-3">
+    <h5 class="mb-3">{{ modalTitle }}</h5>
+    <p class="mb-4">{{ modalMessage }}</p>
+    <div class="text-end">
+      <button class="btn btn-light" (click)="closeMessageModal()">OK</button>
+    </div>
+  </div>
+</div>
   

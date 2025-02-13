@@ -60,6 +60,22 @@ export class AdminDashboardComponent implements OnInit {
 
   errorMessage: string | null = null;
 
+  showMessageModal = false;
+  modalTitle = '';
+  modalMessage = '';
+
+  openMessageModal(title: string, msg: string) {
+    this.modalTitle = title;
+    this.modalMessage = msg;
+    this.showMessageModal = true;
+  }
+
+  closeMessageModal() {
+    this.showMessageModal = false;
+    this.modalTitle = '';
+    this.modalMessage = '';
+  }
+
   constructor(
     private eventService: EventService,
     private userService: UserService,
@@ -347,11 +363,12 @@ export class AdminDashboardComponent implements OnInit {
         next: () => {
           // (Re-Fetch)
           this.loadEvents();
+          this.openMessageModal('Success', 'Event updated successfully!');
           this.closeEventModal();
         },
         error: (err) => {
           console.error('Update event failed', err);
-          this.errorMessage = 'Could not update event.';
+          this.openMessageModal('Error', 'Could not update event.');
         }
       });
     } else {
@@ -360,11 +377,12 @@ export class AdminDashboardComponent implements OnInit {
         next: () => {
           // (Re-Fetch)
           this.loadEvents();
+          this.openMessageModal('Success', 'Event created successfully!');
           this.closeEventModal();
         },
         error: (err) => {
           console.error('Create event failed', err);
-          this.errorMessage = 'Could not create event.';
+          this.openMessageModal('Error', 'Could not create event.');
         }
       });
     }
@@ -413,16 +431,17 @@ export class AdminDashboardComponent implements OnInit {
         next: () => {
           // (Re-Fetch)
           this.loadUsers();
+          this.openMessageModal('Success', 'User updated successfully!');
           this.closeUserModal();
         },
         error: (err) => {
           console.error('Update user failed', err);
-          this.errorMessage = 'Could not update user.';
+          this.openMessageModal('Error', 'Could not update user.');
         }
       });
     } else {
       // create user => placeholder logic or call authService.register(...)
-      alert('No "create user" endpoint here — placeholder logic!');
+      this.openMessageModal('Info', 'Creating a new user is not allowed. Register to create.');
       this.closeUserModal();
     }
   }
@@ -464,11 +483,12 @@ export class AdminDashboardComponent implements OnInit {
         next: () => {
           // (Re-Fetch)
           this.loadGroups();
+          this.openMessageModal('Success', 'Group updated successfully!');
           this.closeGroupModal();
         },
         error: (err) => {
           console.error('Update group failed', err);
-          this.errorMessage = 'Could not update group.';
+          this.openMessageModal('Error', 'Could not update group.');
         }
       });
     } else {
@@ -480,11 +500,12 @@ export class AdminDashboardComponent implements OnInit {
         next: () => {
           // (Re-Fetch)
           this.loadGroups();
+          this.openMessageModal('Success', 'Group created successfully!');
           this.closeGroupModal();
         },
         error: (err) => {
           console.error('Create group failed', err);
-          this.errorMessage = 'Could not create group.';
+          this.openMessageModal('Error', 'Could not create group.');
         }
       });
     }
@@ -529,11 +550,12 @@ export class AdminDashboardComponent implements OnInit {
         next: () => {
           // (Re-Fetch)
           this.loadLocations();
+          this.openMessageModal('Success', 'Location updated successfully!');
           this.closeLocationModal();
         },
         error: (err) => {
           console.error('Update location failed', err);
-          this.errorMessage = 'Could not update location.';
+          this.openMessageModal('Error', 'Could not update location.');
         }
       });
     } else {
@@ -546,11 +568,12 @@ export class AdminDashboardComponent implements OnInit {
         next: () => {
           // (Re-Fetch)
           this.loadLocations();
+          this.openMessageModal('Success', 'Location created successfully!');
           this.closeLocationModal();
         },
         error: (err) => {
           console.error('Create location failed', err);
-          this.errorMessage = 'Could not create location.';
+          this.openMessageModal('Error', 'Could not create location.');
         }
       });
     }
@@ -591,11 +614,12 @@ export class AdminDashboardComponent implements OnInit {
         next: () => {
           // (Re-Fetch)
           this.loadCategories();
+          this.openMessageModal('Success', 'Event category updated successfully!');
           this.closeCategoryModal();
         },
         error: (err) => {
           console.error('Update category failed', err);
-          this.errorMessage = 'Could not update category.';
+          this.openMessageModal('Error', 'Could not update category.');
         }
       });
     } else {
@@ -606,11 +630,12 @@ export class AdminDashboardComponent implements OnInit {
         next: () => {
           // (Re-Fetch)
           this.loadCategories();
+          this.openMessageModal('Success', 'Event category created successfully!');
           this.closeCategoryModal();
         },
         error: (err) => {
           console.error('Create category failed', err);
-          this.errorMessage = 'Could not create category.';
+          this.openMessageModal('Error', 'Could not create category.');
         }
       });
     }
