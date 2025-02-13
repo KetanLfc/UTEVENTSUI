@@ -1,0 +1,35 @@
+<div class="home-container">
+  <!-- Hero text or welcome message -->
+  <div class="hero-text">
+    <h1>Welcome to UTEvents!</h1>
+    <p>
+      Your one-stop hub for discovering and joining exciting events at UTM.
+      Make the most of your university life!
+    </p>
+  </div>
+
+  <!-- Existing image slider -->
+  <div class="img-slider">
+    <div
+      class="slide"
+      *ngFor="let slide of slides; let i = index"
+      [class.active]="i === currentSlideIndex"
+    >
+      <img [src]="slide.image" alt="Slide Image" />
+      <div class="info" *ngIf="slide.title || slide.info">
+        <h2>{{ slide.title }}</h2>
+        <p>{{ slide.info }}</p>
+      </div>
+    </div>
+
+    <!-- Navigation dots -->
+    <div class="navigation">
+      <div
+        class="btn"
+        *ngFor="let slide of slides; let i = index"
+        [class.active]="i === currentSlideIndex"
+        (click)="goToSlide(i)"
+      ></div>
+    </div>
+  </div>
+</div>

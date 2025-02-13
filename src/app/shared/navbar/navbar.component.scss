@@ -1,0 +1,17 @@
+.custom-navbar {
+    background-color: #343a40;
+  
+    .nav-link {
+      transition: color 0.2s;
+      &:hover {
+        color: #ffc107; // golden highlight
+      }
+    }
+  
+    .bi-gear-fill {
+      font-size: 1.4rem;
+      margin-right: 4px; // small spacing before any text if needed
+      vertical-align: middle; // ensure icon aligns with text properly
+    }
+  }
+  

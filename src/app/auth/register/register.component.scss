@@ -1,0 +1,35 @@
+.register-container {
+    background-color: #042a32;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    .register-form {
+      background: #fff;
+      border-radius: 10px;
+      padding: 2rem;
+      width: 90%;
+      max-width: 400px;
+  
+      h2 {
+        font-size: 24px;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+  
+      .form-label {
+        font-weight: 600;
+      }
+  
+      .btn {
+        background-color: #095465;
+        border: none;
+  
+        &:hover {
+          background-color: #1ddee8;
+        }
+      }
+    }
+  }
+  

@@ -1,0 +1,26 @@
+.custom-footer {
+    .icons {
+      // Some spacing or styling for the list
+      li {
+        margin: 0 8px;
+        font-size: 1.2rem; // Increase icon size if you like
+        display: inline-block;
+  
+        a {
+          color: #fff; // ensure icons are white
+          text-decoration: none;
+          transition: color 0.2s;
+  
+          &:hover {
+            color: #ffd700; // a golden hover color or any highlight
+          }
+        }
+      }
+    }
+  
+    // extra styling
+    p, h5 {
+      color: #fff;
+    }
+  }
+  

@@ -1,0 +1,97 @@
+<div class="calendar-container container mt-4">
+    <h2 class="text-white mb-3">Events Calendar</h2>
+  
+    <!-- "Go to Date" search, etc. -->
+    <div class="row mb-3">
+      <div class="col-auto">
+        <label for="searchDate" class="text-white me-2">Search by Date:</label>
+      </div>
+      <div class="col-auto">
+        <input
+          id="searchDate"
+          type="date"
+          [(ngModel)]="searchDate"
+          class="form-control"
+          style="max-width: 200px;"
+        />
+      </div>
+      <div class="col-auto">
+        <button
+          class="btn btn-primary"
+          (click)="onDateSearch()"
+        >
+          Go
+        </button>
+      </div>
+    </div>
+  
+    <!-- The FullCalendar component -->
+    <full-calendar
+      #calendar
+      [options]="calendarOptions"
+      style="background-color: #fff; border-radius: 8px; padding: 1rem;"
+    ></full-calendar>
+  </div>
+  
+  <!-- ===================== EVENT DETAIL MODAL ===================== -->
+  <div class="custom-modal" *ngIf="showEventModal && selectedEvent">
+    <div class="modal-content">
+      <!-- Close button if you like -->
+      <button class="btn btn-sm btn-secondary align-self-end" (click)="closeEventModal()">X</button>
+  
+      <h3>{{ selectedEvent.name }}</h3>
+      <img
+        [src]="selectedEvent.imageUrl || 'assets/default-event.jpg'"
+        style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 5px;"
+      />
+  
+      <p>
+        <strong>Category:</strong> {{ selectedEvent.categoryName }} <br>
+        <strong>Location:</strong> {{ selectedEvent.location?.name || 'N/A' }} <br>
+        <strong>Start:</strong> {{ selectedEvent.startDateTime | date:'short' }} <br>
+        <strong>End:</strong> {{ selectedEvent.endDateTime | date:'short' }} <br>
+        <strong>Status:</strong> {{ selectedEvent.status }} <br>
+        <strong>Scope:</strong> {{ selectedEvent.scope }} <br>
+        <strong>Description:</strong> {{ selectedEvent.description }}
+      </p>
+  
+      <!-- RSVP Buttons -->
+      <div *ngIf="isLoggedIn(); else notLoggedIn">
+        <button
+          class="btn me-2"
+          [ngClass]="{
+            'btn-primary': userRsvp !== RSVPStatus.Going,
+            'btn-outline-primary': userRsvp === RSVPStatus.Going
+          }"
+          (click)="onRsvp(selectedEvent.id, RSVPStatus.Going)"
+        >
+          Going
+        </button>
+        <button
+          class="btn me-2"
+          [ngClass]="{
+            'btn-success': userRsvp !== RSVPStatus.Interested,
+            'btn-outline-success': userRsvp === RSVPStatus.Interested
+          }"
+          (click)="onRsvp(selectedEvent.id, RSVPStatus.Interested)"
+        >
+          Interested
+        </button>
+        <button
+          class="btn"
+          [ngClass]="{
+            'btn-danger': userRsvp !== RSVPStatus.NotGoing,
+            'btn-outline-danger': userRsvp === RSVPStatus.NotGoing
+          }"
+          (click)="onRsvp(selectedEvent.id, RSVPStatus.NotGoing)"
+        >
+          Not Going
+        </button>
+      </div>
+  
+      <ng-template #notLoggedIn>
+        <small>Please <a routerLink="/login">log in</a> to RSVP.</small>
+      </ng-template>
+    </div>
+  </div>
+  

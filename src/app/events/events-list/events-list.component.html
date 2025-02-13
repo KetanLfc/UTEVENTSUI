@@ -1,0 +1,100 @@
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="text-white">Upcoming Events</h2>
+  
+      <!-- Admin-only Add button -->
+      <button *ngIf="isAdmin()" class="btn btn-primary" (click)="onAddEvent()">
+        Add Event
+      </button>
+    </div>
+  
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  
+    <div class="row" *ngIf="events.length > 0; else noEvents">
+      <!-- Each event is displayed in a .col-md-4 (one third per row on medium screens) -->
+      <div class="col-md-4 mb-3" *ngFor="let event of events">
+        <div class="card shadow-sm h-100">
+          <img
+            [src]="determineEventImage(event)"
+            class="card-img-top"
+            alt="Event Image"
+            style="height: 200px; object-fit: cover;"
+          />
+          <div class="card-body">
+            <h5 class="card-title">{{ event.name }}</h5>
+            <p class="card-text">
+              <strong>Category:</strong> {{ event.categoryName }}<br>
+              <strong>Location:</strong> {{ event.location?.name || 'N/A' }}<br>
+              <strong>Start:</strong> {{ event.startDateTime | date:'short' }}<br>
+              <strong>End:</strong> {{ event.endDateTime | date:'short' }}<br>
+              <strong>Status:</strong> {{ event.status }}<br>
+              <strong>Scope:</strong> {{ event.scope }}<br>
+              <strong>Description:</strong> {{ event.description }}
+            </p>
+  
+            <!-- RSVP Buttons (highlight current selection) -->
+            <div *ngIf="isLoggedIn(); else notLoggedIn">
+              <button
+                class="btn me-2"
+                [ngClass]="{
+                  'btn-primary': userRsvpMap[event.id] !== RSVPStatus.Going,
+                  'btn-outline-primary': userRsvpMap[event.id] === RSVPStatus.Going
+                }"
+                (click)="onRsvp(event.id, RSVPStatus.Going)"
+              >
+                Going
+              </button>
+              <button
+                class="btn me-2"
+                [ngClass]="{
+                  'btn-success': userRsvpMap[event.id] !== RSVPStatus.Interested,
+                  'btn-outline-success': userRsvpMap[event.id] === RSVPStatus.Interested
+                }"
+                (click)="onRsvp(event.id, RSVPStatus.Interested)"
+              >
+                Interested
+              </button>
+              <button
+                class="btn"
+                [ngClass]="{
+                  'btn-danger': userRsvpMap[event.id] !== RSVPStatus.NotGoing,
+                  'btn-outline-danger': userRsvpMap[event.id] === RSVPStatus.NotGoing
+                }"
+                (click)="onRsvp(event.id, RSVPStatus.NotGoing)"
+              >
+                Not Going
+              </button>
+            </div>
+            <ng-template #notLoggedIn>
+              <small>Please <a routerLink="/login">log in</a> to RSVP.</small>
+            </ng-template>
+          </div>
+  
+          <!-- Card footer: Admin-only controls -->
+          <div class="card-footer d-flex justify-content-between" *ngIf="isAdmin()">
+            <button class="btn btn-sm btn-warning" (click)="onEditEvent(event.id)">Update</button>
+            <!-- The Delete button triggers a local boolean. -->
+            <button (click)="openDeleteModal(event.id)">Delete</button>
+            <!-- The modal markup: shown if showDeleteModal == true -->
+    <div class="custom-modal" *ngIf="showDeleteModal">
+    <div class="modal-content">
+      <p>Are you sure you want to delete?</p>
+      <button class="btn btn-secondary" (click)="cancelDelete()">Cancel</button>
+      <button class="btn btn-danger" (click)="confirmDelete()">Delete</button>
+    </div>
+    </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <ng-template #noEvents>
+      <div class="alert alert-info">
+        No events found.
+      </div>
+    </ng-template>
+  </div>
+  

@@ -1,0 +1,80 @@
+:host {
+    display: block;
+    min-height: 100vh;
+    background-color: #042a32;
+    padding: 20px;
+  }
+  
+  h2 {
+    color: #fff; // so the heading is visible on dark background
+  }
+  
+  .card {
+    border-radius: 6px;
+  
+    .card-img-top {
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+    }
+  
+    // On hover, a slight shadow effect
+    &:hover {
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+  
+    .card-footer {
+      background-color: #f8f9fa; // light gray background for the footer
+    }
+  }
+  
+  // custom style for the RSVP buttons
+  .btn-outline-primary.btn, 
+  .btn-outline-success.btn, 
+  .btn-outline-danger.btn {
+    font-weight: 600;
+    border: 2px solid;
+  }
+
+/* The full-screen semi-transparent background overlay */
+.custom-modal {
+    position: fixed;         /* Stays in the same place even if page scrolls */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dim backdrop */
+  
+    display: flex;           /* Use flex to center modal content */
+    align-items: center;     /* Vertically center */
+    justify-content: center; /* Horizontally center */
+    z-index: 9999;           /* Ensure it’s above most other elements */
+  }
+  
+  /* The "window" part */
+  .modal-content {
+    background-color: #fff;    /* White background for the dialog */
+    border-radius: 6px;        /* Slightly round corners */
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;          /* Don’t let it grow too wide */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* A soft shadow */
+  
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;                 /* Optional spacing between elements */
+  
+    /* style the text, buttons, etc. inside here */
+  }
+  
+  /* <p> text or any text in the modal: */
+  .modal-content p {
+    margin: 0;                /* Reset default spacing */
+    font-size: 1rem;          /* Adjust as fit */
+  }
+  
+  /* delete/cancel buttons group */
+  .modal-content .btn {
+    align-self: flex-end;     /* Move them to the right */
+    margin-left: 0.5rem;
+  }
+  
