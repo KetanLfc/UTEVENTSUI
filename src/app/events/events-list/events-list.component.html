@@ -39,8 +39,8 @@
               <button
                 class="btn me-2"
                 [ngClass]="{
-                  'btn-primary': userRsvpMap[event.id] !== RSVPStatus.Going,
-                  'btn-outline-primary': userRsvpMap[event.id] === RSVPStatus.Going
+                  'btn-success': userRsvpMap[event.id] !== RSVPStatus.Going,
+                  'btn-outline-success': userRsvpMap[event.id] === RSVPStatus.Going
                 }"
                 (click)="onRsvp(event.id, RSVPStatus.Going)"
               >
@@ -49,8 +49,8 @@
               <button
                 class="btn me-2"
                 [ngClass]="{
-                  'btn-success': userRsvpMap[event.id] !== RSVPStatus.Interested,
-                  'btn-outline-success': userRsvpMap[event.id] === RSVPStatus.Interested
+                  'btn-primary': userRsvpMap[event.id] !== RSVPStatus.Interested,
+                  'btn-outline-primary': userRsvpMap[event.id] === RSVPStatus.Interested
                 }"
                 (click)="onRsvp(event.id, RSVPStatus.Interested)"
               >

@@ -29,7 +29,11 @@ export class AdminDashboardComponent implements OnInit {
 
   // Data arrays
   events: IEvent[] = [];
+  filteredEvents: IEvent[] = []; 
+  eventSearchTerm: string = '';
   users: IUser[] = [];
+  filteredUsers: IUser[] = [];   
+  userSearchTerm: string = '';
   public userEvents: IUserEvent[] = [];
   locations: ILocation[] = [];
   groups: IGroup[] = [];
@@ -107,6 +111,7 @@ export class AdminDashboardComponent implements OnInit {
     this.eventService.getEvents().subscribe({
       next: (data) => {
         this.events = data;
+        this.filteredEvents = data;
       },
       error: (err) => {
         console.error('Error fetching events', err);
@@ -123,6 +128,7 @@ export class AdminDashboardComponent implements OnInit {
     this.userService.getAllUsers().subscribe({
       next: (data) => {
         this.users = data;
+        this.filteredUsers = data;
       },
       error: (err) => {
         console.error('Error fetching users', err);
@@ -222,6 +228,39 @@ export class AdminDashboardComponent implements OnInit {
     const notGoingCount = relevant.filter(r => r.rsvpStatus === 'NotGoing').length;
     return { goingCount, interestedCount, notGoingCount };
   }  
+
+  applyEventSearch(): void {
+    const term = this.eventSearchTerm.toLowerCase().trim();
+    if (!term) {
+      // if search is empty => show all
+      this.filteredEvents = this.events;
+      return;
+    }
+    this.filteredEvents = this.events.filter(ev => {
+      // can adjust conditions
+      // e.g., searching by ev.name, ev.location?.name, etc.
+      return (
+        ev.name.toLowerCase().includes(term) ||
+        (ev.location?.name?.toLowerCase().includes(term) ?? false)
+      );
+    });
+  }
+
+  applyUserSearch(): void {
+    const term = this.userSearchTerm.toLowerCase().trim();
+    if (!term) {
+      this.filteredUsers = this.users;
+      return;
+    }
+    this.filteredUsers = this.users.filter(u => {
+      // searching by user name, email, roleName, etc.
+      return (
+        u.name.toLowerCase().includes(term) ||
+        u.email.toLowerCase().includes(term) ||
+        u.roleName.toLowerCase().includes(term)
+      );
+    });
+  }
 
   // --------------------------
   // DELETE MODAL
@@ -445,6 +484,36 @@ export class AdminDashboardComponent implements OnInit {
       this.closeUserModal();
     }
   }
+
+  confirmEmail(user: IUser) {
+    // We can reuse the same userService.updateUser(...) method
+    // Only difference: we set `emailConfirmed = true`
+    
+    const payload = {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      password: '',        // no password change
+      isActive: user.isActive,
+      roleId: user.roleId, // or user.roleId
+      groupId: user.groupId,
+      emailConfirmed: true // <--- set to true
+    };
+  
+    this.userService.updateUser(user.id, payload).subscribe({
+      next: () => {
+        // After success, reload users
+        this.loadUsers();
+        // Show a success modal
+        this.openMessageModal('Success', `Email for ${user.name} confirmed!`);
+      },
+      error: (err) => {
+        console.error('Confirm email failed', err);
+        this.openMessageModal('Error', 'Could not confirm email.');
+      }
+    });
+  }
+  
 
   // --------------------------
   // ADD/EDIT GROUP MODAL

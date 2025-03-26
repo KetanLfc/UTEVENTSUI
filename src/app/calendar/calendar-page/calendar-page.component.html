@@ -60,8 +60,8 @@
         <button
           class="btn me-2"
           [ngClass]="{
-            'btn-primary': userRsvp !== RSVPStatus.Going,
-            'btn-outline-primary': userRsvp === RSVPStatus.Going
+            'btn-success': userRsvp !== RSVPStatus.Going,
+            'btn-outline-success': userRsvp === RSVPStatus.Going
           }"
           (click)="onRsvp(selectedEvent.id, RSVPStatus.Going)"
         >
@@ -70,8 +70,8 @@
         <button
           class="btn me-2"
           [ngClass]="{
-            'btn-success': userRsvp !== RSVPStatus.Interested,
-            'btn-outline-success': userRsvp === RSVPStatus.Interested
+            'btn-primary': userRsvp !== RSVPStatus.Interested,
+            'btn-outline-primary': userRsvp === RSVPStatus.Interested
           }"
           (click)="onRsvp(selectedEvent.id, RSVPStatus.Interested)"
         >

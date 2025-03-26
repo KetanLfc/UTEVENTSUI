@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 export class HomeComponent implements OnInit {
   slides = [
     {
-      image: 'assets/Homepage/5d0463677978fe85a6004226cffc471b.jpg',
+      image: 'assets/Homepage/Events-and-programs-collage.png',
       title: 'Push Your Boundaries',
       info: 'Explore fresh ideas, deepen friendships, test your limits.'
     },
@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
       info: 'Immerse yourself in growth from day one; never stop exploring.'
     },
     {
-      image: 'assets/Homepage/fun learning education homeschool quote.jpg',
+      image: 'assets/Homepage/students.jpg',
       title: 'Fun + Learning',
       info: 'Fuse creativity with knowledge for a memorable, meaningful journey.'
     }

@@ -12,6 +12,13 @@ import { AuthService } from '../../core/services/auth.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+
+  showPassword = false;
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
   email = '';
   password = '';
 

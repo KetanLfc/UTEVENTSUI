@@ -18,6 +18,26 @@ import { ILocation } from '../../core/models/location.model';
 export class EventFormComponent implements OnInit {
   isEdit = false;
   form!: FormGroup;
+  // message modal state
+  showMessageModal = false;
+  modalTitle = '';
+  modalMessage = '';
+
+  // method to open modal
+  openMessageModal(title: string, msg: string) {
+    this.modalTitle = title;
+    this.modalMessage = msg;
+    this.showMessageModal = true;
+  }
+
+  // method to close modal
+  closeMessageModal() {
+    this.showMessageModal = false;
+    this.modalTitle = '';
+    this.modalMessage = '';
+    // Optional: navigate to /events
+    this.router.navigate(['/events']);
+  }
 
   locations: ILocation[] = [];
   eventCategories: IEventCategory[] = [];
@@ -98,11 +118,11 @@ export class EventFormComponent implements OnInit {
 
     this.eventService.createEvent(eventRequest).subscribe({
       next: () => {
-        alert('Event created successfully!');
+        this.openMessageModal('Success', 'Event created successfully!');
         this.router.navigate(['/events']);
       },
       error: () => {
-        alert('Error creating event!');
+        this.openMessageModal('Error', 'Failed to create event.');
       }
     });
   }
@@ -119,11 +139,11 @@ export class EventFormComponent implements OnInit {
 
     this.eventService.updateEvent(eventId, eventRequest).subscribe({
       next: () => {
-        alert('Event updated successfully!');
+        this.openMessageModal('Success', 'Event updated successfully!');
         this.router.navigate(['/events']);
       },
       error: () => {
-        alert('Error updating event!');
+        this.openMessageModal('Error', 'Failed to update event.');
       }
     });
   }

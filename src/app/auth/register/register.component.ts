@@ -15,6 +15,18 @@ import { IGroup } from '../../core/models/group.model';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+
+  showPassword = false;        // controls password field
+  showConfirmPassword = false;
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  toggleConfirmPasswordVisibility(): void {
+    this.showConfirmPassword = !this.showConfirmPassword;
+  }
+
   // Form fields
   name = '';
   email = '';
